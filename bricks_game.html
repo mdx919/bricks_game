@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+	<html>
+	<head>
+		<title>Bricks_Game</title>
+		<script src="https://code.createjs.com/createjs-2015.11.26.min.js"></script>
+	</head>
+	<!-- body -->
+	<body onload="init();">
+	<canvas id="testcanvas" width="500" height="500"></canvas>
+
+	<script>
+		function init() {
+			// making circle using EaselJS
+			var stage = new createjs.Stage("testcanvas");
+			var circle = new createjs.Shape();
+			circle.graphics.beginFill("Red").drawCircle(0,0,90);
+			circle.x = 250;
+			circle.y = 250;
+			stage.addChild(circle);
+			stage.update();
+
+		}
+	</script>
+
+	</body>
+</html>
