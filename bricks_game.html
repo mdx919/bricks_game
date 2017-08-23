@@ -6,21 +6,79 @@
 	</head>
 	<!-- body -->
 	<body onload="init();">
-	<canvas id="testcanvas" width="500" height="500"></canvas>
 
-	<script>
-		function init() {
-			// making circle using EaselJS
-			var stage = new createjs.Stage("testcanvas");
-			var circle = new createjs.Shape();
-			circle.graphics.beginFill("Red").drawCircle(0,0,90);
-			circle.x = 250;
-			circle.y = 250;
-			stage.addChild(circle);
-			stage.update();
+		<canvas id="newCanvas" style="border: 2px solid Green;" width="1200" height="500"></canvas>
+			<script>
 
-		}
-	</script>
+				const PADDLE_WIDTH = 100;
+				const PADDLE_HEIGHT = 30;
+				const BRICKS_WIDTH = 60;
+				const BRICKS_HEIGHT = 30;
+				var stage;
+				var paddle;
+				var ball;
+				var brick;
+
+				function init() {
+					stage = new createjs.Stage("newCanvas");
+					createjs.Ticker.setFPS(60);
+					createjs.Ticker.addEventListener("tick", stage);
+
+					createBrickGrid();
+					addBall();
+					addPaddle();
+				}
+
+
+					function createBrickGrid(){
+						for (var i = 1; i <= 14; i++) {
+							for (var j = 1; j <= 5; j++) {
+								addBrick(i*(BRICKS_WIDTH+5)+40, j*(BRICKS_HEIGHT+5)+40);
+							}
+						}
+					}
+
+
+					function addBrick(x, y) {
+						brick = new createjs.Shape();
+						brick.graphics.beginFill("Blue");
+						brick.graphics.drawRect(0, 0, BRICKS_WIDTH, BRICKS_HEIGHT);
+						brick.graphics.endFill();
+						stage.addChild(brick);
+
+						brick.x = x;
+						brick.y = y;
+
+						brick.regX = BRICKS_WIDTH/2;
+						brick.regY = BRICKS_HEIGHT/2;
+
+
+
+					}
+
+					function destroyBrick(brick) {
+						createjs.Tween.get(brick,{}).to({scaleX:0, scaleY:0}, 500);
+					}
+
+					function addBall() {
+						ball = new createjs.Shape();
+						ball.graphics.beginFill("Red");
+						ball.graphics.drawCircle(0, 0, 8);
+						ball.x = stage.canvas.width/2-4;
+						ball.y = stage.canvas.height-PADDLE_HEIGHT;
+						stage.addChild(ball);
+					}
+
+					function addPaddle() {
+						paddle = new createjs.Shape();
+						paddle.graphics.beginFill("Black").drawRect(0, 0, PADDLE_WIDTH, PADDLE_HEIGHT);
+						paddle.y = stage.canvas.height*0.95;
+						paddle.x = stage.canvas.width/2 - PADDLE_WIDTH/2;
+						stage.addChild(paddle);
+					}
+
+
+			</script>
 
 	</body>
 </html>
